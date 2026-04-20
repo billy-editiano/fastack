@@ -1,0 +1,12 @@
+dependencies:
+- name: app
+  repository: file://../app/helm/chart
+  version: 0.1.0
+- name: worker
+  repository: file://../worker/helm/chart
+  version: 0.1.0
+- name: mariadb
+  repository: file://../mariadb/helm/chart
+  version: 0.1.0
+digest: sha256:bb0c86115161679973dad92054dfb096f5df9759c876b0d32d406229fa060f4f
+generated: "2026-04-20T14:46:21.47690207+07:00"

@@ -1,0 +1,4 @@
+name: app
+pull_base_images:
+  - source: python:3.14-slim
+    retag: fastack-python:3.14-slim

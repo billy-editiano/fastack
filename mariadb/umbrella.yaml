@@ -1,0 +1,4 @@
+name: mariadb
+pull_base_images:
+  - source: mariadb:11.4
+    retag: fastack-mariadb-base:11.4

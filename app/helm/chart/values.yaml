@@ -1,0 +1,33 @@
+replicaCount: 1
+
+image:
+  repository: fastack/app
+  pullPolicy: IfNotPresent
+  tag: latest
+
+podAnnotations: {}
+podLabels: {}
+
+service:
+  type: ClusterIP
+  port: 8000
+
+env: []
+
+probes:
+  liveness:
+    path: /
+    initialDelaySeconds: 10
+    periodSeconds: 30
+  readiness:
+    path: /
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

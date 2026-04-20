@@ -1,0 +1,21 @@
+image:
+  repository: fastack/mariadb
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 3306
+
+auth:
+  rootPassword: rootpassword
+  database: appdb
+  user: appuser
+  password: apppassword
+
+persistence:
+  enabled: true
+  size: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClass: ""

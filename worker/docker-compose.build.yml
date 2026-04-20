@@ -1,0 +1,6 @@
+services:
+  worker:
+    image: fastack/worker:latest
+    build:
+      context: .
+      dockerfile: Dockerfile

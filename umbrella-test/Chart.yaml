@@ -1,0 +1,16 @@
+apiVersion: v2
+name: umbrella-test
+description: Umbrella chart for testing app, worker, and mariadb together
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+dependencies:
+  - name: app
+    version: 0.1.0
+    repository: "file://../app/helm/chart"
+  - name: worker
+    version: 0.1.0
+    repository: "file://../worker/helm/chart"
+  - name: mariadb
+    version: 0.1.0
+    repository: "file://../mariadb/helm/chart"

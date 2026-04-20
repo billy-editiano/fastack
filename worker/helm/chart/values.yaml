@@ -1,0 +1,40 @@
+replicaCount: 1
+
+image:
+  repository: fastack/worker
+  pullPolicy: IfNotPresent
+  tag: latest
+
+podAnnotations: {}
+podLabels: {}
+
+service:
+  type: ClusterIP
+  port: 8000
+
+env:
+  - name: DB_HOST
+    value: mariadb
+  - name: DB_PORT
+    value: "3306"
+  - name: DB_USER
+    value: appuser
+  - name: DB_PASSWORD
+    value: apppassword
+  - name: DB_NAME
+    value: appdb
+
+probes:
+  liveness:
+    path: /
+    initialDelaySeconds: 10
+    periodSeconds: 30
+  readiness:
+    path: /
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}

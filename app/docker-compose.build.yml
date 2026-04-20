@@ -1,0 +1,6 @@
+services:
+  app:
+    image: fastack/app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile

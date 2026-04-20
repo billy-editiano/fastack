@@ -1,0 +1,6 @@
+services:
+  mariadb:
+    image: fastack/mariadb:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
