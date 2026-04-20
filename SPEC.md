@@ -39,3 +39,7 @@ Based on these criteria, I want you to build these hello world apps following th
 - worker (a simple hello world FastAPI app that just returns hello world and connects to the DB via environment variables)
 
 Assume these charts and services can be deployed independently.
+
+---
+
+for python project, use `uv`
