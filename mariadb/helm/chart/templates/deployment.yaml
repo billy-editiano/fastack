@@ -1,13 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "chart.fullname" . }}
   labels:
     {{- include "chart.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
-  strategy:
-    type: Recreate
+  serviceName: {{ include "chart.serviceName" . }}
   selector:
     matchLabels:
       {{- include "chart.selectorLabels" . | nindent 6 }}
