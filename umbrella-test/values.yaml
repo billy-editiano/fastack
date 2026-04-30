@@ -1,11 +1,13 @@
 app:
   image:
+    registry: ""
     repository: fastack/app
     tag: latest
     pullPolicy: IfNotPresent
 
 worker:
   image:
+    registry: ""
     repository: fastack/worker
     tag: latest
     pullPolicy: IfNotPresent
@@ -19,9 +21,10 @@ worker:
 
 mariadb:
   image:
+    registry: ""
     repository: fastack/mariadb
     tag: latest
-  pullPolicy: IfNotPresent
+    pullPolicy: IfNotPresent
   auth:
     rootPassword:
       existingSecret: null

@@ -24,6 +24,16 @@
 - Current convention: `database.host` is templated.
 - Keep templated values limited to infrastructure references, not arbitrary app config.
 - Prefer `"{{ .Release.Name }}-<service>-service"` for cross-chart Service DNS defaults.
+- Chart values files support Jinja2-style templating for the external post-processor.
+- The supported delimiters are `[# comments #]`, `[[ variables ]]`, and `[% statements %]`.
+- This applies to both `values.yaml` and `values.sample.yaml`.
+- Helm templates should treat these as plain strings unless they are explicitly rendered with `tpl`.
+
+## Images
+- `image.registry` is optional and defaults to an empty string.
+- If `image.registry` is empty, the final image should render as `repository:tag`.
+- If `image.registry` is set, render `registry/repository:tag`.
+- Keep `repository`, `tag`, and `pullPolicy` as the standard image fields.
 
 ## Database
 - Prefer service DNS names over hardcoded IPs.

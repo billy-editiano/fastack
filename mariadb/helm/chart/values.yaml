@@ -4,6 +4,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 image:
+  registry: ""
   repository: fastack/mariadb
   pullPolicy: IfNotPresent
   tag: latest

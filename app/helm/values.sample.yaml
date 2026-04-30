@@ -1,7 +1,8 @@
 image:
-  repository: "{{ join(target.registry, 'fastack/app') }}"
+  registry: ""
+  repository: "[[ join(target.registry, 'fastack/app') ]]"
   pullPolicy: IfNotPresent
-  tag: "{{ artifact.version }}"
+  tag: "[[ artifact.version ]]"
 
 service:
   type: ClusterIP

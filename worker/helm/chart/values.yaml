@@ -4,6 +4,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 image:
+  registry: ""
   repository: fastack/worker
   pullPolicy: IfNotPresent
   tag: latest
