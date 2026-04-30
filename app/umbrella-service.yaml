@@ -1,0 +1,7 @@
+name: app
+dependencies:
+  - source: python:3.14-slim
+    target: fastack-python:3.14-slim
+
+images:
+  - "fastack/app"

@@ -35,23 +35,27 @@ spec:
             - name: MARIADB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
+                  {{- if .Values.auth.rootPassword.existingSecret }}
+                  name: {{ .Values.auth.rootPassword.existingSecret | quote }}
+                  key: {{ required "auth.rootPassword.existingSecretKey is required when auth.rootPassword.existingSecret is set" .Values.auth.rootPassword.existingSecretKey | quote }}
+                  {{- else }}
                   name: {{ include "chart.fullname" . }}-auth
                   key: root-password
+                  {{- end }}
             - name: MARIADB_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "chart.fullname" . }}-auth
-                  key: database
+              value: {{ .Values.auth.database | quote }}
             - name: MARIADB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "chart.fullname" . }}-auth
-                  key: username
+              value: {{ .Values.auth.user | quote }}
             - name: MARIADB_PASSWORD
               valueFrom:
                 secretKeyRef:
+                  {{- if .Values.auth.password.existingSecret }}
+                  name: {{ .Values.auth.password.existingSecret | quote }}
+                  key: {{ required "auth.password.existingSecretKey is required when auth.password.existingSecret is set" .Values.auth.password.existingSecretKey | quote }}
+                  {{- else }}
                   name: {{ include "chart.fullname" . }}-auth
                   key: password
+                  {{- end }}
           livenessProbe:
             tcpSocket:
               port: mysql

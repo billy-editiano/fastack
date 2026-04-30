@@ -1,0 +1,7 @@
+name: mariadb
+dependencies:
+  - source: mariadb:11.4
+    target: fastack-mariadb-base:11.4
+
+images:
+  - "fastack/mariadb"

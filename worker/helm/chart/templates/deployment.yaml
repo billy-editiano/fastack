@@ -29,6 +29,28 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          env:
+            - name: DB_HOST
+              value: {{ tpl .Values.database.host . | quote }}
+            - name: DB_PORT
+              value: {{ .Values.database.port | toString | quote }}
+            - name: DB_USER
+              value: {{ .Values.database.user | quote }}
+            - name: DB_NAME
+              value: {{ .Values.database.name | quote }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  {{- if .Values.database.password.existingSecret }}
+                  name: {{ .Values.database.password.existingSecret | quote }}
+                  key: {{ required "database.password.existingSecretKey is required when database.password.existingSecret is set" .Values.database.password.existingSecretKey | quote }}
+                  {{- else }}
+                  name: {{ printf "%s-db" (include "chart.fullname" .) | quote }}
+                  key: password
+                  {{- end }}
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: {{ .Values.probes.liveness.path }}
@@ -41,10 +63,6 @@ spec:
               port: http
             initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
             periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
-          {{- with .Values.env }}
-          env:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

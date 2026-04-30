@@ -8,10 +8,16 @@ service:
   port: 3306
 
 auth:
-  rootPassword: rootpassword
+  rootPassword:
+    existingSecret: null
+    existingSecretKey: null
+    value: rootpassword
   database: appdb
   user: appuser
-  password: apppassword
+  password:
+    existingSecret: null
+    existingSecretKey: null
+    value: apppassword
 
 persistence:
   enabled: true

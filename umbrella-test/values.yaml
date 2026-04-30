@@ -1,36 +1,35 @@
 app:
-  fullnameOverride: app
   image:
     repository: fastack/app
     tag: latest
     pullPolicy: IfNotPresent
 
 worker:
-  fullnameOverride: worker
   image:
     repository: fastack/worker
     tag: latest
     pullPolicy: IfNotPresent
-  env:
-    - name: DB_HOST
-      value: mariadb
-    - name: DB_PORT
-      value: "3306"
-    - name: DB_USER
-      value: appuser
-    - name: DB_PASSWORD
+  database:
+    host: "{{ .Release.Name }}-mariadb-service"
+    port: 3306
+    name: appdb
+    user: appuser
+    password:
       value: apppassword
-    - name: DB_NAME
-      value: appdb
 
 mariadb:
-  fullnameOverride: mariadb
   image:
     repository: fastack/mariadb
     tag: latest
-    pullPolicy: IfNotPresent
+  pullPolicy: IfNotPresent
   auth:
-    rootPassword: rootpassword
+    rootPassword:
+      existingSecret: null
+      existingSecretKey: null
+      value: rootpassword
     database: appdb
     user: appuser
-    password: apppassword
+    password:
+      existingSecret: null
+      existingSecretKey: null
+      value: apppassword

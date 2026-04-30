@@ -1,12 +1,25 @@
 replicaCount: 1
 
+nameOverride: ""
+fullnameOverride: ""
+
 image:
-  repository: fastack/app
+  repository: "{{ join(target.registry, 'fastack/app') }}"
   pullPolicy: IfNotPresent
-  tag: latest
+  tag: "{{ artifact.version }}"
 
 podAnnotations: {}
 podLabels: {}
+
+database:
+  host: "{{ .Release.Name }}-mariadb-service"
+  port: 3306
+  name: appdb
+  user: appuser
+  password:
+    existingSecret: null
+    existingSecretKey: null
+    value: null
 
 service:
   type: ClusterIP
