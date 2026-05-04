@@ -1,7 +1,7 @@
 image:
   registry: ""
   repository: "[[ join(target.registry, project.name, 'fastack/worker') ]]"
-  tag: latest
+  tag: "[[ artifact.version ]]"
   pullPolicy: IfNotPresent
 
 service:

@@ -7,7 +7,7 @@ image:
   registry: ""
   repository: "[[ join(target.registry, project.name, 'fastack/worker') ]]"
   pullPolicy: IfNotPresent
-  tag: latest
+  tag: "[[ artifact.version ]]"
 
 database:
   host: "{{ .Release.Name }}-mariadb-service"
