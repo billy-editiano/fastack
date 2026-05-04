@@ -5,7 +5,7 @@ fullnameOverride: ""
 
 image:
   registry: ""
-  repository: "[[ join(target.registry, 'fastack/app') ]]"
+  repository: "[[ join(target.registry, project.name, 'fastack/app') ]]"
   pullPolicy: IfNotPresent
   tag: "[[ artifact.version ]]"
 

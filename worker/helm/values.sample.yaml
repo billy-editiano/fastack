@@ -1,6 +1,6 @@
 image:
   registry: ""
-  repository: fastack/worker
+  repository: "[[ join(target.registry, project.name, 'fastack/worker') ]]"
   tag: latest
   pullPolicy: IfNotPresent
 

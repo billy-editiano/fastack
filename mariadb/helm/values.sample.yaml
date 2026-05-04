@@ -1,6 +1,6 @@
 image:
   registry: ""
-  repository: fastack/mariadb
+  repository: "[[ join(target.registry, project.name, 'fastack/mariadb') ]]"
   tag: latest
   pullPolicy: IfNotPresent
 
