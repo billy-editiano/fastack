@@ -3,5 +3,8 @@ dependencies:
   - source: mariadb:11.4
     target: fastack-mariadb-base:11.4
 
+# if pushed to our harbor then
+# it will be `harbor.datasaur.ai/shared/mariadb`
 images:
-  - "fastack/mariadb"
+  - name: "mariadb"
+    prefix: "shared"

@@ -5,7 +5,7 @@ fullnameOverride: ""
 
 image:
   registry: ""
-  repository: "[[ join(target.registry, project.name, 'fastack/mariadb') ]]"
+  repository: "[[ join('shared', 'mariadb') ]]"
   pullPolicy: IfNotPresent
   tag: latest
 

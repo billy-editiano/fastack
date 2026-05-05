@@ -1,7 +1,10 @@
 name: app
 dependencies:
-  - source: python:3.14-slim
-    target: fastack-python:3.14-slim
+  - source: punyakowin/service:3.14-slim
+    target: mantap:3.14-slim
 
+# if pushed to our harbor then
+# it will be `harbor.datasaur.ai/<project.name>/fastack/app`
 images:
-  - "fastack/app"
+  - name: "fastack/app"
+    prefix: "[[ project.name ]]"
