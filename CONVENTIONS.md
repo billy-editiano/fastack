@@ -47,6 +47,6 @@
 ## Build and Umbrella Files
 - Each service has a `docker-compose.build.yml` for local image builds.
 - `docker-compose.build.yml` should always tag the image(s) as `latest`.
-- Each service has an `umbrella-service.yaml` for image/dependency metadata used by the umbrella pipeline.
-- Add this note to `umbrella-service.yaml`: `Please refer to Umbrella Builder notion page for more information`.
+- Each service has an `umbrella-service.yml` for image/dependency metadata used by the umbrella pipeline.
+- Add this note to `umbrella-service.yml`: `Please refer to Umbrella Builder notion page for more information`.
 - These files should remain aligned with the service name and image name in that directory.
