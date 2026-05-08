@@ -41,9 +41,9 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  {{- if .Values.database.password.existingSecret }}
-                  name: {{ .Values.database.password.existingSecret | quote }}
-                  key: {{ required "database.password.existingSecretKey is required when database.password.existingSecret is set" .Values.database.password.existingSecretKey | quote }}
+                  {{- if .Values.database.password.existingSecretName }}
+                  name: {{ .Values.database.password.existingSecretName | quote }}
+                  key: {{ required "database.password.existingSecretKey is required when database.password.existingSecretName is set" .Values.database.password.existingSecretKey | quote }}
                   {{- else }}
                   name: {{ printf "%s-db" (include "chart.fullname" .) | quote }}
                   key: password

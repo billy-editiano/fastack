@@ -9,13 +9,13 @@ image:
   pullPolicy: IfNotPresent
   tag: "[[ artifact.version ]]"
 
-database:
+  database:
   host: "{{ .Release.Name }}-mariadb-service"
   port: 3306
   name: appdb
   user: appuser
   password:
-    existingSecret: null
+    existingSecretName: null
     existingSecretKey: null
     value: null
 

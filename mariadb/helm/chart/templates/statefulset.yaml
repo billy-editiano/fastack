@@ -34,9 +34,9 @@ spec:
             - name: MARIADB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  {{- if .Values.auth.rootPassword.existingSecret }}
-                  name: {{ .Values.auth.rootPassword.existingSecret | quote }}
-                  key: {{ required "auth.rootPassword.existingSecretKey is required when auth.rootPassword.existingSecret is set" .Values.auth.rootPassword.existingSecretKey | quote }}
+                  {{- if .Values.auth.rootPassword.existingSecretName }}
+                  name: {{ .Values.auth.rootPassword.existingSecretName | quote }}
+                  key: {{ required "auth.rootPassword.existingSecretKey is required when auth.rootPassword.existingSecretName is set" .Values.auth.rootPassword.existingSecretKey | quote }}
                   {{- else }}
                   name: {{ include "chart.fullname" . }}-auth
                   key: root-password
@@ -48,9 +48,9 @@ spec:
             - name: MARIADB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  {{- if .Values.auth.password.existingSecret }}
-                  name: {{ .Values.auth.password.existingSecret | quote }}
-                  key: {{ required "auth.password.existingSecretKey is required when auth.password.existingSecret is set" .Values.auth.password.existingSecretKey | quote }}
+                  {{- if .Values.auth.password.existingSecretName }}
+                  name: {{ .Values.auth.password.existingSecretName | quote }}
+                  key: {{ required "auth.password.existingSecretKey is required when auth.password.existingSecretName is set" .Values.auth.password.existingSecretKey | quote }}
                   {{- else }}
                   name: {{ include "chart.fullname" . }}-auth
                   key: password

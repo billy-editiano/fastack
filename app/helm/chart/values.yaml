@@ -18,7 +18,7 @@ database:
   name: appdb
   user: appuser
   password:
-    existingSecret: null
+    existingSecretName: null
     existingSecretKey: null
     value: null
 

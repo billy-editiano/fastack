@@ -8,15 +8,15 @@ service:
   type: ClusterIP
   port: 3306
 
-auth:
+  auth:
   rootPassword:
-    existingSecret: null
+    existingSecretName: null
     existingSecretKey: null
     value: rootpassword
   database: appdb
   user: appuser
   password:
-    existingSecret: null
+    existingSecretName: null
     existingSecretKey: null
     value: apppassword
 

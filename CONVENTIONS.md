@@ -39,7 +39,7 @@
 - Prefer service DNS names over hardcoded IPs.
 - Default database host values should resolve from release context when the chart is rendered.
 - Cross-chart database settings should stay in chart values, not inline in templates.
-- MariaDB auth supports per-field `existingSecret` / `existingSecretKey` / `value`.
+- MariaDB auth supports per-field `existingSecretName` / `existingSecretKey` / `value`.
 - If inline `value` is provided for both MariaDB passwords, create one chart secret containing both.
 - External secrets win per field when provided.
 - `auth.database` and `auth.user` remain plain values; only passwords participate in secret selection.

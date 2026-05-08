@@ -8,13 +8,13 @@ service:
   type: ClusterIP
   port: 8000
 
-database:
+  database:
   host: "{{ .Release.Name }}-mariadb-service"
   port: 3306
   name: appdb
   user: appuser
   password:
-    existingSecret: null
+    existingSecretName: null
     existingSecretKey: null
     value: apppassword
 

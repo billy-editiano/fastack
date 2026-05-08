@@ -19,8 +19,8 @@ This repository contains subcharts for app, worker and mariadb and an umbrella c
   - If `image.registry` is set it emits `registry/repository:tag`.
 - Database configuration
   - Charts prefer `.Values.database` as the single source of truth for DB env variables.
-  - Passwords/auth fields are modeled as objects with three possible fields: `existingSecret`, `existingSecretKey`, and `value`.
-  - Precedence: if `existingSecret` (and optionally `existingSecretKey`) is provided the chart will mount/read that external secret per-field. Otherwise, if `value` is provided the chart will create an in-chart secret.
+  - Passwords/auth fields are modeled as objects with three possible fields: `existingSecretName`, `existingSecretKey`, and `value`.
+  - Precedence: if `existingSecretName` (and optionally `existingSecretKey`) is provided the chart will mount/read that external secret per-field. Otherwise, if `value` is provided the chart will create an in-chart secret.
   - For mariadb, if both root and user passwords are provided inline the chart creates a single chart-managed auth secret named `<fullname>-auth`.
 - Templated values: use `tpl` in chart templates when you expect a values string to contain Helm template expressions (e.g. `database.host: "{{ .Release.Name }}-mariadb-service"`).
 - Values preprocessing: values files in this repo may contain Jinja2-style placeholders processed externally. The chosen delimiters are:
@@ -36,11 +36,11 @@ MARIADB auth shape (values.yaml)
 mariadb:
   auth:
     rootPassword:
-      existingSecret: ""
+      existingSecretName: ""
       existingSecretKey: "root"
       value: ""
     password:
-      existingSecret: ""
+      existingSecretName: ""
       existingSecretKey: "password"
       value: ""
 ```
@@ -55,7 +55,7 @@ worker:
     user: fastack
     name: fastack
     password:
-      existingSecret: ""
+      existingSecretName: ""
       existingSecretKey: "password"
       value: ""
 ```

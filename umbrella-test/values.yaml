@@ -19,7 +19,7 @@ worker:
     password:
       value: apppassword
 
-mariadb:
+  mariadb:
   image:
     registry: ""
     repository: fastack/mariadb
@@ -27,12 +27,12 @@ mariadb:
     pullPolicy: IfNotPresent
   auth:
     rootPassword:
-      existingSecret: null
+      existingSecretName: null
       existingSecretKey: null
       value: rootpassword
     database: appdb
     user: appuser
     password:
-      existingSecret: null
+      existingSecretName: null
       existingSecretKey: null
       value: apppassword
