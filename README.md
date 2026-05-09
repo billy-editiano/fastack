@@ -70,17 +70,13 @@ image:
 ```
 
 ## How to render and test locally
+- Run the repo test command:
+
+  make test
+
 - Update umbrella dependencies (when editing subcharts):
 
   helm dependency update umbrella-test
-
-- Lint a chart:
-
-  helm lint app/helm/chart
-
-- Render templates (dry-run):
-
-  helm template umbrella-test ./umbrella-test -f umbrella-test/values.yaml
 
 - Install/upgrade locally:
 
