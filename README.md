@@ -72,15 +72,21 @@ image:
 ## How to render and test locally
 - Run the repo test command:
 
+  ```sh
   make test
+  ```
 
 - Update umbrella dependencies (when editing subcharts):
 
+  ```sh
   helm dependency update umbrella-test
+  ```
 
 - Install/upgrade locally:
 
+  ```sh
   helm upgrade --install umbrella-test ./umbrella-test -f umbrella-test/values.yaml
+  ```
 
 ## Docker Compose builds
 - The repository expects `docker-compose.build.yml` files (per-service) to tag build images as `latest`. Check `*/docker-compose.build.yml` if you rely on local builds.
