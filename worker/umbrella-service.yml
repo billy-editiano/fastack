@@ -3,6 +3,7 @@ dependencies:
   - source: python:3.14-slim
     target: fastack-python:3.14-slim
 
+# Please refer to Umbrella Builder notion page for more information
 images:
   - name: "fastack/worker"
     prefix: "[[ project.name ]]"

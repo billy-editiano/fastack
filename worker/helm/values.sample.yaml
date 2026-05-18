@@ -1,14 +1,10 @@
 image:
-  registry: ""
-  repository: "[[ join(target.registry, project.name, 'fastack/worker') ]]"
+  registry: "[[ target.registry ]]"
+  repository: "[[ join(project.name, 'fastack/worker') ]]"
   tag: "[[ artifact.version ]]"
   pullPolicy: IfNotPresent
 
-service:
-  type: ClusterIP
-  port: 8000
-
-  database:
+database:
   host: "{{ .Release.Name }}-mariadb-service"
   port: 3306
   name: appdb
@@ -17,5 +13,9 @@ service:
     existingSecretName: null
     existingSecretKey: null
     value: apppassword
+
+service:
+  type: ClusterIP
+  port: 8000
 
 env: []

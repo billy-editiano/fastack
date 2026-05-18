@@ -12,16 +12,6 @@ image:
 podAnnotations: {}
 podLabels: {}
 
-database:
-  host: "{{ .Release.Name }}-mariadb-service"
-  port: 3306
-  name: appdb
-  user: appuser
-  password:
-    existingSecretName: null
-    existingSecretKey: null
-    value: null
-
 service:
   type: ClusterIP
   port: 8000

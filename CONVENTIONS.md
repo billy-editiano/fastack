@@ -34,15 +34,20 @@
 - If `image.registry` is empty, the final image should render as `repository:tag`.
 - If `image.registry` is set, render `registry/repository:tag`.
 - Keep `repository`, `tag`, and `pullPolicy` as the standard image fields.
+- Service-local chart defaults should keep `registry` and `repository` separate instead of folding the registry into `repository`.
+- Local umbrella-test values may keep `registry: ""` and use `fastack/<service>` repositories with `tag: latest`.
 
 ## Database
 - Prefer service DNS names over hardcoded IPs.
 - Default database host values should resolve from release context when the chart is rendered.
 - Cross-chart database settings should stay in chart values, not inline in templates.
+- Worker-like services keep database config under top-level `database:`.
 - MariaDB auth supports per-field `existingSecretName` / `existingSecretKey` / `value`.
 - If inline `value` is provided for both MariaDB passwords, create one chart secret containing both.
 - External secrets win per field when provided.
+- MariaDB-like services keep auth config under top-level `auth:`.
 - `auth.database` and `auth.user` remain plain values; only passwords participate in secret selection.
+- If persistence is enabled for MariaDB, the chart must create the PVC it mounts.
 
 ## Build and Umbrella Files
 - Each service has a `docker-compose.build.yml` for local image builds.
@@ -50,3 +55,4 @@
 - Each service has an `umbrella-service.yml` for image/dependency metadata used by the umbrella pipeline.
 - Add this note to `umbrella-service.yml`: `Please refer to Umbrella Builder notion page for more information`.
 - These files should remain aligned with the service name and image name in that directory.
+- Current service image names are `fastack/app`, `fastack/worker`, and `fastack/mariadb`.

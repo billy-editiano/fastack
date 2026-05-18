@@ -4,10 +4,10 @@ nameOverride: ""
 fullnameOverride: ""
 
 image:
-  registry: ""
-  repository: "[[ join('shared', 'mariadb') ]]"
+  registry: "[[ target.registry ]]"
+  repository: "[[ join(project.name, 'fastack/mariadb') ]]"
   pullPolicy: IfNotPresent
-  tag: latest
+  tag: "[[ artifact.version ]]"
 
 podAnnotations: {}
 podLabels: {}
@@ -16,7 +16,7 @@ service:
   type: ClusterIP
   port: 3306
 
-  auth:
+auth:
   rootPassword:
     existingSecretName: null
     existingSecretKey: null

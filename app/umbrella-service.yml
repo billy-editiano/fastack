@@ -1,8 +1,9 @@
 name: app
 dependencies:
   - source: python:3.14-slim
-    target: mantap:3.14-slim
+    target: fastack-python:3.14-slim
 
+# Please refer to Umbrella Builder notion page for more information
 # if pushed to our harbor then
 # it will be `harbor.datasaur.ai/<project.name>/fastack/app`
 images:

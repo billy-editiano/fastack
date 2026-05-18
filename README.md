@@ -10,6 +10,8 @@ This repository contains subcharts for app, worker and mariadb and an umbrella c
 - Implemented per-field secret precedence: external secret (per-field) wins; otherwise the chart creates a secret from inline values.
 - Added optional `image.registry` support across charts. When empty the templates render `repository:tag`, otherwise `registry/repository:tag`.
 - Enabled `tpl` use for templated values (e.g. `database.host`) so values can include templated strings resolved at chart render time.
+- Aligned worker and mariadb values paths with the templates that consume them.
+- Added an explicit PVC template for mariadb persistence.
 - Added a CONVENTIONS.md documenting the above rules.
 
 ## Conventions (summary)
@@ -18,10 +20,12 @@ This repository contains subcharts for app, worker and mariadb and an umbrella c
   - If `image.registry` is empty the template emits `repository:tag`.
   - If `image.registry` is set it emits `registry/repository:tag`.
 - Database configuration
-  - Charts prefer `.Values.database` as the single source of truth for DB env variables.
+  - Worker-like charts prefer top-level `.Values.database` as the source of truth for DB env variables.
+  - MariaDB-like charts use top-level `.Values.auth` for runtime auth settings.
   - Passwords/auth fields are modeled as objects with three possible fields: `existingSecretName`, `existingSecretKey`, and `value`.
   - Precedence: if `existingSecretName` (and optionally `existingSecretKey`) is provided the chart will mount/read that external secret per-field. Otherwise, if `value` is provided the chart will create an in-chart secret.
   - For mariadb, if both root and user passwords are provided inline the chart creates a single chart-managed auth secret named `<fullname>-auth`.
+  - If mariadb persistence is enabled, the chart also creates the PVC it mounts.
 - Templated values: use `tpl` in chart templates when you expect a values string to contain Helm template expressions (e.g. `database.host: "{{ .Release.Name }}-mariadb-service"`).
 - Values preprocessing: values files in this repo may contain Jinja2-style placeholders processed externally. The chosen delimiters are:
   - Comments: [# ... #]
@@ -33,31 +37,31 @@ This repository contains subcharts for app, worker and mariadb and an umbrella c
 MARIADB auth shape (values.yaml)
 
 ```yaml
-mariadb:
-  auth:
-    rootPassword:
-      existingSecretName: ""
-      existingSecretKey: "root"
-      value: ""
-    password:
-      existingSecretName: ""
-      existingSecretKey: "password"
-      value: ""
+auth:
+  rootPassword:
+    existingSecretName: null
+    existingSecretKey: null
+    value: rootpassword
+  database: appdb
+  user: appuser
+  password:
+    existingSecretName: null
+    existingSecretKey: null
+    value: apppassword
 ```
 
 WORKER database example (values.yaml)
 
 ```yaml
-worker:
-  database:
-    host: "{{ .Release.Name }}-mariadb-service"
-    port: 3306
-    user: fastack
-    name: fastack
-    password:
-      existingSecretName: ""
-      existingSecretKey: "password"
-      value: ""
+database:
+  host: "{{ .Release.Name }}-mariadb-service"
+  port: 3306
+  user: appuser
+  name: appdb
+  password:
+    existingSecretName: null
+    existingSecretKey: null
+    value: apppassword
 ```
 
 IMAGE example (values.yaml)
@@ -65,8 +69,8 @@ IMAGE example (values.yaml)
 ```yaml
 image:
   registry: ""        # leave empty to render repository:tag
-  repository: myorg/fastack-app
-  tag: "0.1.0"
+  repository: fastack/app
+  tag: latest
 ```
 
 ## How to render and test locally
@@ -97,12 +101,10 @@ image:
 - worker/helm/chart/templates/secret.yaml
 - mariadb/helm/chart/templates/secret.yaml
 - mariadb/helm/chart/templates/statefulset.yaml
+- mariadb/helm/chart/templates/persistentvolumeclaim.yaml
 - app/helm/chart/templates/deployment.yaml
 - umbrella-test/values.yaml
 
 ## Next steps / suggestions
-1. Wire the app chart to consume `.Values.database.*` (DB env vars + secret precedence) to match worker.
-2. Decide whether you want this README committed now (I created the file but did not commit it).
-3. Optionally run `helm lint` and `helm template` for each chart and address any Helm warnings.
-
-If you want me to commit this README.md, tell me and I'll create a conventional commit. If you want edits to the README content or a different format, tell me what to change.
+1. Optionally add app-side database wiring only if the app actually needs runtime DB configuration.
+2. Run `helm lint` for each chart and `helm template` for `umbrella-test` after chart edits.

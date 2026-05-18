@@ -17,9 +17,11 @@ worker:
     name: appdb
     user: appuser
     password:
+      existingSecretName: null
+      existingSecretKey: null
       value: apppassword
 
-  mariadb:
+mariadb:
   image:
     registry: ""
     repository: fastack/mariadb

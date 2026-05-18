@@ -3,8 +3,9 @@ dependencies:
   - source: mariadb:11.4
     target: fastack-mariadb-base:11.4
 
+# Please refer to Umbrella Builder notion page for more information
 # if pushed to our harbor then
-# it will be `harbor.datasaur.ai/shared/mariadb`
+# it will be `harbor.datasaur.ai/<project.name>/fastack/mariadb`
 images:
-  - name: "mariadb"
-    prefix: "shared"
+  - name: "fastack/mariadb"
+    prefix: "[[ project.name ]]"
