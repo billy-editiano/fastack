@@ -18,6 +18,12 @@
 - Sample install values are in `service/helm/values.sample.yaml`.
 - Service-specific chart helpers should stay in `service/helm/chart/templates/_helpers.tpl`.
 
+## Docker Swarm Layout
+- The root `swarm/stack.yml` is the umbrella deployment source for Docker Swarm, separate from the service Helm charts.
+- It must reference published, immutable release images, not local `fastack/*:latest` build tags.
+- Do not depend on Docker Compose startup ordering in the stack; services must handle dependencies becoming available later.
+- Packaging does not deploy the stack. Deploy the packaged artifact externally.
+
 ## Templated Values
 - Values that point to other Kubernetes names or DNS targets may contain Helm templates.
 - These fields must be rendered with `tpl` in templates.

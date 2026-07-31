@@ -73,7 +73,7 @@ image:
   tag: latest
 ```
 
-## How to render and test locally
+## Helm: render and test locally
 - Update umbrella dependencies (when editing subcharts):
 
   helm dependency update umbrella-test
@@ -89,6 +89,16 @@ image:
 - Install/upgrade locally:
 
   helm upgrade --install umbrella-test ./umbrella-test -f umbrella-test/values.yaml
+
+## Docker Swarm deployment
+- The root `swarm/stack.yml` is the umbrella deployment source for Swarm.
+- It must reference published, immutable release images rather than local `fastack/*:latest` build tags.
+- Swarm stacks do not provide Docker Compose startup ordering; services must tolerate their dependencies becoming available later.
+- Packaging produces the deployment artifact only. Deploy the extracted stack externally:
+
+  ```bash
+  docker stack deploy --with-registry-auth --compose-file swarm-stack.yml fastack
+  ```
 
 ## Docker Compose builds
 - The repository expects `docker-compose.build.yml` files (per-service) to tag build images as `latest`. Check `*/docker-compose.build.yml` if you rely on local builds.
