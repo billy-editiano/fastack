@@ -46,4 +46,34 @@ Assume these charts and services can be deployed independently.
 
 ---
 
+## Docker Swarm packaging contract
+
+The project manifest participates in Swarm packaging with the `app`, `worker`,
+and `mariadb` artifacts. There is no synthetic deployment artifact and no
+root `swarm/stack.yml`.
+
+Each participating artifact owns one deployment fragment:
+
+```text
+app/swarm/stack.yml
+worker/swarm/stack.yml
+mariadb/swarm/stack.yml
+```
+
+Each fragment contributes one or more services and may repeat identical shared
+resource definitions. Umbrella Packager merges the fragments in manifest order
+into one generated `swarm-stack.yml`. The `mariadb` fragment owns the
+`mariadb-data` volume; all three fragments may declare the identical `fastack`
+overlay network.
+
+Packaged fragments use `published_image(...)` for release image references and
+must not contain local-development fields such as `build` or `depends_on`.
+The literal database credentials in the example are development-only. Real
+deployments should use externally managed Swarm secrets.
+
+The root `umbrella.docker-compose.yml` remains a separate local-development
+file and is not a packaged Swarm fragment.
+
+---
+
 for python project, use `uv`

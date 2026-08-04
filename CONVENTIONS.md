@@ -19,8 +19,12 @@
 - Service-specific chart helpers should stay in `service/helm/chart/templates/_helpers.tpl`.
 
 ## Docker Swarm Layout
-- The root `swarm/stack.yml` is the umbrella deployment source for Docker Swarm, separate from the service Helm charts.
-- It must reference published, immutable release images, not local `fastack/*:latest` build tags.
+- Each participating service owns `service/swarm/stack.yml`, separate from its Helm chart.
+- Umbrella Packager merges the participating fragments into one generated `swarm-stack.yml`; there is no root Swarm stack owner.
+- Fragments must reference published, immutable release images with `published_image(...)`, not local `fastack/*:latest` build tags.
+- Shared resources may be repeated only when their definitions are identical. The `fastack` overlay network is shared by all fragments, while `mariadb-data` is owned by `mariadb/swarm/stack.yml`.
+- File-backed configs, when added, must live under the owning service's `swarm/assets/` directory and are packaged under an artifact-scoped destination.
+- The literal database credentials in the example fragments are development-only. Production deployments should use externally managed Swarm secrets.
 - Do not depend on Docker Compose startup ordering in the stack; services must handle dependencies becoming available later.
 - Packaging does not deploy the stack. Deploy the packaged artifact externally.
 
@@ -62,3 +66,4 @@
 - Add this note to `umbrella-service.yml`: `Please refer to Umbrella Builder notion page for more information`.
 - These files should remain aligned with the service name and image name in that directory.
 - Current service image names are `fastack/app`, `fastack/worker`, and `fastack/mariadb`.
+- Each Swarm service fragment must define a non-empty `services` mapping and must not include Compose build-only fields such as `build` or `depends_on`.

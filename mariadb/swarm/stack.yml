@@ -1,0 +1,19 @@
+services:
+  mariadb:
+    image: '[[ published_image("mariadb", "fastack/mariadb") ]]'
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: appdb
+      MARIADB_USER: appuser
+      MARIADB_PASSWORD: apppassword
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    networks:
+      - fastack
+
+networks:
+  fastack:
+    driver: overlay
+
+volumes:
+  mariadb-data: {}

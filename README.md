@@ -91,8 +91,21 @@ image:
   helm upgrade --install umbrella-test ./umbrella-test -f umbrella-test/values.yaml
 
 ## Docker Swarm deployment
-- The root `swarm/stack.yml` is the umbrella deployment source for Swarm.
-- It must reference published, immutable release images rather than local `fastack/*:latest` build tags.
+- Each participating artifact owns its Swarm fragment at
+  `artifact/swarm/stack.yml`. The current fragments are
+  `app/swarm/stack.yml`, `worker/swarm/stack.yml`, and
+  `mariadb/swarm/stack.yml`.
+- Umbrella Packager merges those fragments into one generated
+  `swarm-stack.yml`; there is no root deployment artifact or root
+  `swarm/stack.yml`.
+- Fragments must reference published, immutable release images through
+  `published_image(...)`, rather than local `fastack/*:latest` build tags.
+- The shared `fastack` overlay network may be declared by each fragment when
+  the definitions are identical. The `mariadb` fragment owns the
+  `mariadb-data` named volume.
+- The literal database credentials in these fragments are development-only
+  demonstration values. Production releases should use externally managed
+  Swarm secrets instead of embedding credentials in service environments.
 - Swarm stacks do not provide Docker Compose startup ordering; services must tolerate their dependencies becoming available later.
 - Packaging produces the deployment artifact only. Deploy the extracted stack externally:
 
@@ -102,6 +115,7 @@ image:
 
 ## Docker Compose builds
 - The repository expects `docker-compose.build.yml` files (per-service) to tag build images as `latest`. Check `*/docker-compose.build.yml` if you rely on local builds.
+- `umbrella.docker-compose.yml` is a separate local-development file. Its `build` and `depends_on` entries do not belong in packaged Swarm fragments.
 
 ## Key files touched
 - CONVENTIONS.md
